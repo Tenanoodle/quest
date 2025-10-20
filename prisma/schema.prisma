@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Quest {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  priority    Int
+  dueDate     DateTime?
+  createdAt   DateTime    @default(now())
+  milestones  Milestone[]
+  tasks       Task[]
+}
+
+model Milestone {
+  id        String   @id @default(cuid())
+  questId   String
+  title     String
+  createdAt DateTime @default(now())
+  quest     Quest    @relation(fields: [questId], references: [id])
+  tasks     Task[]
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  questId     String?
+  milestoneId String?
+  title       String
+  done        Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  quest       Quest?     @relation(fields: [questId], references: [id])
+  milestone   Milestone? @relation(fields: [milestoneId], references: [id])
+}
+
+model InboxItem {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+}
