@@ -1,0 +1,20 @@
+{
+  "name": "quest-todo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm --prefix server i && npm --prefix web i",
+    "dev": "concurrently -k \"npm:dev:*\"",
+    "dev:web": "npm --prefix web run dev",
+    "dev:api": "npm --prefix server run dev",
+    "build": "npm --prefix web run build && npm --prefix server run build",
+    "test": "npm --prefix web test && npm --prefix server test",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0"
+  }
+}
